@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow-lg border-0">
+        <div class="card-body p-5">
+          <!-- Heading -->
+          <h2 class="text-center mb-4 fw-bold text-primary">
+            Welcome to Message Me
+          </h2>
+          
+          <!-- Signup Icon -->
+          <div class="text-center mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-person-plus-fill text-primary" viewBox="0 0 16 16">
+              <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+              <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+            </svg>
+          </div>
+          
+          <!-- Signup text -->
+          <p class="text-center text-muted mb-4">Create your account</p>
+          
+          <!-- Error Messages -->
+          <%= render 'shared/errors', object: @user %>
+          
+          <!-- Signup Form -->
+          <%= form_with(model: @user, url: signup_path, method: :post, local: true, class: "needs-validation") do |f| %>
+            
+            <!-- Username Field -->
+            <div class="mb-3">
+              <%= f.label :username, class: "form-label fw-semibold" %>
+              <%= f.text_field :username, class: "form-control form-control-lg", placeholder: "Choose a username", autofocus: true, required: true %>
+              <div class="form-text">Username must be 3-25 characters long</div>
+            </div>
+            
+            <!-- Password Field -->
+            <div class="mb-3">
+              <%= f.label :password, class: "form-label fw-semibold" %>
+              <%= f.password_field :password, class: "form-control form-control-lg", placeholder: "Choose a password", required: true %>
+            </div>
+            
+            <!-- Password Confirmation Field -->
+            <div class="mb-4">
+              <%= f.label :password_confirmation, "Confirm Password", class: "form-label fw-semibold" %>
+              <%= f.password_field :password_confirmation, class: "form-control form-control-lg", placeholder: "Confirm your password", required: true %>
+            </div>
+            
+            <!-- Signup Button -->
+            <div class="d-grid mb-3">
+              <%= f.submit "Sign Up", class: "btn btn-success btn-lg btn-signup" %>
+            </div>
+            
+            <!-- Login Link -->
+            <div class="text-center">
+              <p class="text-muted mb-0">
+                Already have an account? 
+                <%= link_to "Login", login_path, class: "text-decoration-none fw-semibold" %>
+              </p>
+            </div>
+            
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
