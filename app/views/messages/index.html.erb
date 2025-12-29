@@ -1,0 +1,143 @@
+<div class="chat-container">
+  <!-- Sidebar - List of conversations -->
+  <div class="chat-sidebar">
+    <div class="sidebar-header">
+      <h4 class="mb-0">Chats</h4>
+      <div class="header-icons">
+        <button class="btn btn-link" data-bs-toggle="modal" data-bs-target="#newChatModal">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Search box -->
+    <div class="search-box">
+      <input type="text" class="form-control" placeholder="Search messenger...">
+    </div>
+    
+    <!-- Conversations list -->
+    <div class="conversations-list">
+      <% current_user.conversations.order(updated_at: :desc).each do |conversation| %>
+        <% opposed_user = conversation.opposed_user(current_user) %>
+        <% last_message = conversation.last_message %>
+        <%= link_to conversation_messages_path(conversation), class: "conversation-item #{conversation == @conversation ? 'active' : ''}" do %>
+          <div class="conversation-avatar">
+            <div class="avatar-circle">
+              <%= opposed_user.username.first.upcase %>
+            </div>
+          </div>
+          <div class="conversation-info">
+            <div class="conversation-name"><%= opposed_user.username %></div>
+            <% if last_message %>
+              <div class="conversation-preview"><%= truncate(last_message.body, length: 40) %></div>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  
+  <!-- Chat Window -->
+  <div class="chat-window">
+    <!-- Chat Header -->
+    <div class="chat-header">
+      <div class="d-flex align-items-center">
+        <div class="avatar-circle me-3">
+          <%= @opposed_user.username.first.upcase %>
+        </div>
+        <h5 class="mb-0"><%= @opposed_user.username %></h5>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+          </svg>
+        </button>
+        <button class="btn btn-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5z"/>
+          </svg>
+        </button>
+        <button class="btn btn-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <circle cx="8" cy="8" r="1"/>
+            <circle cx="8" cy="4" r="1"/>
+            <circle cx="8" cy="12" r="1"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Messages Area -->
+    <div class="messages-area" id="messagesArea" data-conversation-id="<%= @conversation.id %>" data-current-user-id="<%= current_user.id %>">
+      <% @messages.each do |message| %>
+        <div class="message-wrapper <%= message.user == current_user ? 'sent' : 'received' %>" data-message-id="<%= message.id %>">
+          <% unless message.user == current_user %>
+            <div class="message-avatar">
+              <div class="avatar-circle-sm">
+                <%= message.user.username.first.upcase %>
+              </div>
+            </div>
+          <% end %>
+          <div class="message-bubble">
+            <%= message.body %>
+          </div>
+          <% if message.user == current_user %>
+            <div class="message-avatar">
+              <div class="avatar-circle-sm">
+                <%= current_user.username.first.upcase %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      
+      <!-- Typing Indicator -->
+      <div id="typingIndicator" class="typing-indicator" style="display: none;"></div>
+    </div>
+    
+    <!-- Message Input -->
+    <div class="message-input-area">
+      <%= form_with(model: [@conversation, @message], local: false, class: "d-flex align-items-center") do |f| %>
+        <button type="button" class="btn btn-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
+          </svg>
+        </button>
+        
+        <%= f.text_field :body, class: "form-control message-input", placeholder: "Message", autocomplete: "off" %>
+        
+        <button type="button" class="btn btn-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+          </svg>
+        </button>
+        
+        <%= f.submit "Send", class: "btn btn-primary ms-2" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- New Chat Modal -->
+<div class="modal fade" id="newChatModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Start New Conversation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="list-group">
+          <% User.where.not(id: current_user.id).each do |user| %>
+            <%= link_to user.username, conversations_path(recipient_id: user.id), method: :post, class: "list-group-item list-group-item-action" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

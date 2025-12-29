@@ -8,6 +8,8 @@ import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 import "bootstrap";
+import "../chat";
+import "../message_form";
 
 Rails.start();
 Turbolinks.start();
