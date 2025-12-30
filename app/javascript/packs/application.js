@@ -10,6 +10,7 @@ import "channels";
 import "bootstrap";
 import "../chat";
 import "../message_form";
+import "../conversation_search";
 
 Rails.start();
 Turbolinks.start();
