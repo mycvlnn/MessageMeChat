@@ -6,6 +6,10 @@ class MessagesController < ApplicationController
     @messages = @conversation.messages.includes(:user).order(created_at: :asc)
     @message = @conversation.messages.new
     @opposed_user = @conversation.opposed_user(current_user)
+    
+    # Check if last message has been read (for "Seen at" indicator)
+    @last_message = @messages.where(user: current_user).last
+    @last_message_read = @last_message&.read? if @last_message
 
     # Mark all messages from opposed user as read
     @conversation.messages

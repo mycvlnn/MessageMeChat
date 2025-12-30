@@ -184,6 +184,7 @@
     flex: 1;
     overflow-y: auto;
     padding: 20px;
+    padding-bottom: 30px;
     background: #f8f9fa;
     display: flex;
     flex-direction: column;
@@ -333,4 +334,5 @@
     bottom: -18px;
     right: 0;
     font-size: 10px;
+    white-space: nowrap;
 }

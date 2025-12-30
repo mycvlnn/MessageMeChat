@@ -1,20 +1,21 @@
 // Chat functionality
-document.addEventListener("DOMContentLoaded", function () {
+
+const initializeChat = () => {
     // Auto scroll to bottom of messages
     const messagesArea = document.getElementById("messagesArea");
     if (messagesArea) {
+        // Scroll immediately
         messagesArea.scrollTop = messagesArea.scrollHeight;
+
+        // Also scroll after images/content loaded
+        setTimeout(() => {
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+        }, 100);
     }
 
-    // Optional: Scroll to bottom after sending message
-    const messageForm = document.querySelector(".message-input-area form");
-    if (messageForm) {
-        messageForm.addEventListener("submit", function () {
-            setTimeout(() => {
-                if (messagesArea) {
-                    messagesArea.scrollTop = messagesArea.scrollHeight;
-                }
-            }, 100);
-        });
-    }
-});
+    // Auto scroll after form submission (handled in message_form.js)
+    // Just focus on initial scroll here
+};
+
+// Support Turbolinks navigation
+document.addEventListener("turbolinks:load", initializeChat);

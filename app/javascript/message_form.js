@@ -1,36 +1,43 @@
 // Handle message form submission via ActionCable (no page reload)
-document.addEventListener("DOMContentLoaded", () => {
+
+const initializeMessageForm = () => {
     const messageForm = document.querySelector(".message-input-area form");
     if (!messageForm) return;
 
-    const messageInput = messageForm.querySelector(".message-input");
-    const submitButton = messageForm.querySelector('[type="submit"]');
+    // Remove old listeners to prevent duplicates
+    const newForm = messageForm.cloneNode(true);
+    messageForm.parentNode.replaceChild(newForm, messageForm);
 
-    // Get the ActionCable subscription from conversation_channel.js
-    // We'll use form submit normally but prevent reload for better UX
-    messageForm.addEventListener("submit", (e) => {
-        const message = messageInput.value.trim();
+    const newInput = newForm.querySelector(".message-input");
+    const newSubmitButton = newForm.querySelector('[type="submit"]');
+
+    // Handle submit
+    newForm.addEventListener("submit", (e) => {
+        const message = newInput.value.trim();
 
         if (!message) {
             e.preventDefault();
             return;
         }
 
-        // Let the form submit normally
-        // The message will be broadcast via after_create_commit callback
-        // ActionCable will receive it and append to UI
-
-        // Clear the input immediately for better UX
+        // Clear input and scroll to bottom
         setTimeout(() => {
-            messageInput.value = "";
+            newInput.value = "";
+            const messagesArea = document.getElementById("messagesArea");
+            if (messagesArea) {
+                messagesArea.scrollTop = messagesArea.scrollHeight;
+            }
         }, 10);
     });
 
-    // Optional: Submit via Enter key
-    messageInput.addEventListener("keypress", (e) => {
+    // Submit via Enter key
+    newInput.addEventListener("keypress", (e) => {
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
-            submitButton.click();
+            newSubmitButton.click();
         }
     });
-});
+};
+
+// Support Turbolinks navigation
+document.addEventListener("turbolinks:load", initializeMessageForm);
