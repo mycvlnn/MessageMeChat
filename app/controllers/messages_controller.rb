@@ -10,6 +10,8 @@ class MessagesController < ApplicationController
     # Check if last message has been read (for "Seen at" indicator)
     @last_message = @messages.where(user: current_user).last
     @last_message_read = @last_message&.read? if @last_message
+    @conversations = current_user.conversations.includes(:messages).order('messages.created_at DESC')
+    @users = User.where.not(id: current_user.id)
 
     # Mark all messages from opposed user as read
     @conversation.messages

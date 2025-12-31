@@ -1,0 +1,48 @@
+  <!-- Sidebar - List of conversations -->
+  <div class="chat-sidebar">
+    <div class="sidebar-header">
+      <h4 class="mb-0">Chats</h4>
+      <div class="header-icons">
+        <button class="btn btn-link" data-bs-toggle="modal" data-bs-target="#newChatModal">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Search box -->
+    <div class="search-box">
+      <input type="text" class="form-control" placeholder="Search messenger..." id="searchInput">
+    </div>
+    
+    <!-- Conversations list -->
+    <div class="conversations-list">
+      <% if @conversations.any? %>
+        <% @conversations.each do |conversation| %>
+          <% opposed_user = conversation.opposed_user(current_user) %>
+          <% last_message = conversation.last_message %>
+          <%= link_to conversation_messages_path(conversation), class: "conversation-item" do %>
+            <div class="conversation-avatar">
+              <div class="avatar-circle">
+                <%= opposed_user.username.first.upcase %>
+              </div>
+            </div>
+            <div class="conversation-info">
+              <div class="conversation-name"><%= opposed_user.username %></div>
+              <% if last_message %>
+                <div class="conversation-preview"><%= truncate(last_message.body, length: 40) %></div>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      <% else %>
+        <div class="text-center text-muted p-4">
+          <p>No conversations yet.</p>
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newChatModal">
+            Start a conversation
+          </button>
+        </div>
+      <% end %>
+    </div>
+  </div>
