@@ -92,6 +92,18 @@ const initializeConversationChannel = () => {
                 if (messageInput) {
                     messageInput.value = "";
                 }
+
+                // Thực hiện xóa read indicators cũ khi có tin nhắn mới
+                const myMessages = document.querySelectorAll(".message-wrapper.sent");
+                if (myMessages.length === 0) return;
+
+                // Xóa tất cả read indicators cũ
+                myMessages.forEach((msg) => {
+                    const oldIndicator = msg.querySelector(".read-indicator");
+                    if (oldIndicator) {
+                        oldIndicator.remove();
+                    }
+                });
             },
 
             handleTyping(data) {
