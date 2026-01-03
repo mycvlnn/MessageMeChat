@@ -190,21 +190,42 @@ const initializeConversationChannel = () => {
 
 const setupTypingIndicator = (subscription) => {
     const messageInput = document.querySelector(".message-input");
-    console.log({ messageInput });
     let typingTimer;
+    let isTyping = false;
+    let debounceTimer;
 
     if (messageInput) {
         messageInput.addEventListener("input", () => {
-            subscription.typing(true);
+            // Clear debounce timer
+            clearTimeout(debounceTimer);
 
+            // Debounce: Chỉ gửi typing(true) sau 300ms để tránh spam
+            debounceTimer = setTimeout(() => {
+                if (!isTyping) {
+                    console.log("Sending typing true");
+                    subscription.typing(true);
+                    isTyping = true;
+                }
+            }, 300);
+
+            // Clear và reset timer để gửi typing(false)
             clearTimeout(typingTimer);
             typingTimer = setTimeout(() => {
-                subscription.typing(false);
-            }, 1000);
+                if (isTyping) {
+                    console.log("Sending typing false");
+                    subscription.typing(false);
+                    isTyping = false;
+                }
+            }, 1500);
         });
 
         messageInput.addEventListener("blur", () => {
-            subscription.typing(false);
+            clearTimeout(debounceTimer);
+            clearTimeout(typingTimer);
+            if (isTyping) {
+                subscription.typing(false);
+                isTyping = false;
+            }
         });
     }
 };

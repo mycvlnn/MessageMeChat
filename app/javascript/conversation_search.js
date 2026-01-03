@@ -2,7 +2,6 @@
 
 const initializeConversationSearch = () => {
     const searchInput = document.getElementById("searchInput");
-    console.log({ searchInput });
     const conversationItems = document.querySelectorAll(".conversation-item");
 
     if (!searchInput || conversationItems.length === 0) return;
