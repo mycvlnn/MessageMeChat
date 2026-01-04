@@ -33,7 +33,7 @@
     </div>
     
     <!-- Messages Area -->
-    <div class="messages-area" id="messagesArea" data-conversation-id="<%= @conversation.id %>" data-current-user-id="<%= current_user.id %>">
+    <div class="messages-area" id="messagesArea" data-conversation-id="<%= @conversation.id %>" data-current-user-id="<%= current_user.id %>" data-opposed-user-id="<%= @opposed_user.id %> " >
       <% if @messages.empty? %>
         <div class="empty-conversation" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #65676b;">
           <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.5; margin-bottom: 16px;">

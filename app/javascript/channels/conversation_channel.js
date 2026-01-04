@@ -8,6 +8,7 @@ const initializeConversationChannel = () => {
 
     const conversationId = messagesArea.dataset.conversationId;
     const currentUserId = messagesArea.dataset.currentUserId;
+    const opposedUserId = messagesArea.dataset.opposedUserId;
 
     if (!conversationId || !currentUserId) return;
 
@@ -25,7 +26,8 @@ const initializeConversationChannel = () => {
         {
             connected() {
                 console.log("Connected to conversation " + conversationId);
-                this.markAsRead();
+                // Khi kết nối, đánh dấu tất cả tin nhắn từ opposedUserId là đã đọc
+                this.markAsRead(opposedUserId);
             },
 
             disconnected() {

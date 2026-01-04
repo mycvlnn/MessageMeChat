@@ -21,8 +21,11 @@
       <% if @conversations.any? %>
         <% @conversations.each do |conversation| %>
           <% opposed_user = conversation.opposed_user(current_user) %>
-          <% last_message = conversation.last_message %>
-          <%= link_to conversation_messages_path(conversation), class: "conversation-item" do %>
+          <% 
+            last_message = conversation.last_message
+            active = conversation.id.to_s == params[:conversation_id]
+           %>
+          <%= link_to conversation_messages_path(conversation), class: "conversation-item #{active ? 'active' : ''}" do %>
             <div class="conversation-avatar">
               <div class="avatar-circle">
                 <%= opposed_user.username.first.upcase %>
