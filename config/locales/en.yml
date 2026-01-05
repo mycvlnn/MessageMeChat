@@ -30,4 +30,96 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+    app_name: "Message Me"
+
+    navigation:
+        chatroom: "Chatroom"
+        login: "Login"
+        logout: "Logout"
+        signup: "Sign Up"
+        hello: "Hello"
+
+    auth:
+        login:
+            title: "Welcome to Message Me"
+            subtitle: "Login to continue"
+            username: "Username"
+            username_placeholder: "Enter your username"
+            password: "Password"
+            password_placeholder: "Enter your password"
+            submit: "Login"
+            no_account: "Don't have an account?"
+            signup_link: "Sign up"
+        signup:
+            title: "Welcome to Message Me"
+            subtitle: "Create your account"
+            username: "Username"
+            choose_a_user_name: "Choose a username"
+            username_hint: "Username must be 3-25 characters long"
+            password: "Password"
+            choose_a_password: "Choose a password"
+            password_confirmation: "Confirm Password"
+            confirm_your_password: "Confirm your password"
+            submit: "Sign Up"
+            have_account: "Already have an account?"
+            login_link: "Login"
+
+    conversations:
+        title: "Chats"
+        new_chat: "New Chat"
+        search_placeholder: "Search conversations..."
+        no_results: "No conversations found"
+        welcome:
+            title: "Welcome to Message Me"
+            subtitle: "Select a conversation to start messaging"
+        new_conversation_modal:
+            title: "Start New Conversation"
+            select_user: "Select a user to start chatting"
+
+    messages:
+        empty_conversation:
+            title: "No messages yet"
+            subtitle: "Start the conversation with %{username}"
+        input_placeholder: "Message"
+        send: "Send"
+        typing: "%{user} is typing..."
+        seen_at: "Seen at %{time}"
+
+    flash:
+        welcome: "Welcome to Message Me, %{username}!"
+        logged_out: "You have been logged out successfully"
+        login_success: "Logged in successfully"
+
+    errors:
+        authentication_required: "You must be logged in to access that section"
+        already_logged_in: "You are already logged in"
+        invalid_credentials: "Invalid username or password"
+        count:
+            one: "%{count} error prevented this from being saved:"
+            other: "%{count} errors prevented this from being saved:"
+
+    activerecord:
+        models:
+            user: "User"
+            conversation: "Conversation"
+            message: "Message"
+        attributes:
+            user:
+                username: "Username"
+                password: "Password"
+                password_confirmation: "Password confirmation"
+            message:
+                body: "Message"
+        errors:
+            models:
+                user:
+                    attributes:
+                        username:
+                            blank: "Username cannot be blank"
+                            too_short: "Username is too short (minimum 3 characters)"
+                            too_long: "Username is too long (maximum 25 characters)"
+                            taken: "Username has already been taken"
+                        password:
+                            blank: "Password cannot be blank"
+                        password_confirmation:
+                            confirmation: "Password confirmation doesn't match Password"

@@ -4,8 +4,8 @@
       <div class="card shadow-lg border-0">
         <div class="card-body p-5">
           <!-- Heading -->
-          <h2 class="text-center mb-4 fw-bold text-primary">
-            Welcome to Message Me
+          <h2 class="text-center mb-4 fw-bold text-primary px-2">
+            <%= t('auth.signup.title') %>
           </h2>
           
           <!-- Signup Icon -->
@@ -17,7 +17,7 @@
           </div>
           
           <!-- Signup text -->
-          <p class="text-center text-muted mb-4">Create your account</p>
+          <p class="text-center text-muted mb-4"><%= t('auth.signup.subtitle') %></p>
           
           <!-- Error Messages -->
           <%= render 'shared/errors', object: @user %>
@@ -27,33 +27,33 @@
             
             <!-- Username Field -->
             <div class="mb-3">
-              <%= f.label :username, class: "form-label fw-semibold" %>
-              <%= f.text_field :username, class: "form-control form-control-lg", placeholder: "Choose a username", autofocus: true, required: true %>
-              <div class="form-text">Username must be 3-25 characters long</div>
+              <%= f.label :username, t('auth.signup.username'), class: "form-label fw-semibold" %>
+              <%= f.text_field :username, class: "form-control form-control-lg", placeholder: t('auth.signup.choose_a_user_name'), autofocus: true, required: true %>
+              <div class="form-text"><%= t('auth.signup.username_hint') %></div>
             </div>
             
             <!-- Password Field -->
             <div class="mb-3">
               <%= f.label :password, class: "form-label fw-semibold" %>
-              <%= f.password_field :password, class: "form-control form-control-lg", placeholder: "Choose a password", required: true %>
+              <%= f.password_field :password, class: "form-control form-control-lg", placeholder: t('auth.signup.choose_a_password'), required: true %>
             </div>
             
             <!-- Password Confirmation Field -->
             <div class="mb-4">
-              <%= f.label :password_confirmation, "Confirm Password", class: "form-label fw-semibold" %>
-              <%= f.password_field :password_confirmation, class: "form-control form-control-lg", placeholder: "Confirm your password", required: true %>
+              <%= f.label :password_confirmation, t('auth.signup.password_confirmation'), class: "form-label fw-semibold" %>
+              <%= f.password_field :password_confirmation, class: "form-control form-control-lg", placeholder: t('auth.signup.confirm_your_password'), required: true %>
             </div>
             
             <!-- Signup Button -->
             <div class="d-grid mb-3">
-              <%= f.submit "Sign Up", class: "btn btn-success btn-lg btn-signup" %>
+              <%= f.submit t('auth.signup.submit'), class: "btn btn-success btn-lg btn-signup" %>
             </div>
             
             <!-- Login Link -->
             <div class="text-center">
               <p class="text-muted mb-0">
-                Already have an account? 
-                <%= link_to "Login", login_path, class: "text-decoration-none fw-semibold" %>
+                <%= t('auth.signup.have_account') %>
+                <%= link_to t('auth.signup.login_link'), login_path, class: "text-decoration-none fw-semibold" %>
               </p>
             </div>
             

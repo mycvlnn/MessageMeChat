@@ -1,0 +1,94 @@
+vi:
+    app_name: "Message Me"
+
+    navigation:
+        chatroom: "Phòng chat"
+        login: "Đăng nhập"
+        logout: "Đăng xuất"
+        signup: "Đăng ký"
+        hello: "Xin chào"
+
+    auth:
+        login:
+            title: "Chào mừng đến với Message Me"
+            subtitle: "Đăng nhập để tiếp tục"
+            username: "Tên đăng nhập"
+            username_placeholder: "Nhập tên đăng nhập của bạn"
+            password: "Mật khẩu"
+            password_placeholder: "Nhập mật khẩu của bạn"
+            submit: "Đăng nhập"
+            no_account: "Chưa có tài khoản?"
+            signup_link: "Đăng ký"
+        signup:
+            title: "Chào mừng đến với Message Me"
+            subtitle: "Tạo tài khoản của bạn"
+            username: "Tên đăng nhập"
+            choose_a_user_name: "Chọn tên đăng nhập"
+            username_hint: "Tên đăng nhập phải có từ 3-25 ký tự"
+            password: "Mật khẩu"
+            choose_a_password: "Chọn mật khẩu"
+            password_confirmation: "Xác nhận mật khẩu"
+            confirm_your_password: "Xác nhận mật khẩu của bạn"
+            submit: "Đăng ký"
+            have_account: "Đã có tài khoản?"
+            login_link: "Đăng nhập"
+
+    conversations:
+        title: "Trò chuyện"
+        new_chat: "Cuộc trò chuyện mới"
+        search_placeholder: "Tìm kiếm cuộc trò chuyện..."
+        no_results: "Không tìm thấy cuộc trò chuyện nào"
+        welcome:
+            title: "Chào mừng đến với Message Me"
+            subtitle: "Chọn một cuộc trò chuyện để bắt đầu nhắn tin"
+        new_conversation_modal:
+            title: "Bắt đầu cuộc trò chuyện mới"
+            select_user: "Chọn người dùng để bắt đầu chat"
+
+    messages:
+        empty_conversation:
+            title: "Chưa có tin nhắn"
+            subtitle: "Bắt đầu cuộc trò chuyện với %{username}"
+        input_placeholder: "Tin nhắn"
+        send: "Gửi"
+        typing: "%{user} đang nhập..."
+        seen_at: "Đã xem lúc %{time}"
+
+    flash:
+        welcome: "Chào mừng đến với Message Me, %{username}!"
+        logged_out: "Bạn đã đăng xuất thành công"
+        login_success: "Đăng nhập thành công"
+
+    errors:
+        authentication_required: "Bạn phải đăng nhập để truy cập phần này"
+        already_logged_in: "Bạn đã đăng nhập rồi"
+        invalid_credentials: "Tên đăng nhập hoặc mật khẩu không đúng"
+        count:
+            one: "%{count} lỗi đã ngăn việc lưu:"
+            other: "%{count} lỗi đã ngăn việc lưu:"
+
+    activerecord:
+        models:
+            user: "Người dùng"
+            conversation: "Cuộc trò chuyện"
+            message: "Tin nhắn"
+        attributes:
+            user:
+                username: "Tên đăng nhập"
+                password: "Mật khẩu"
+                password_confirmation: "Xác nhận mật khẩu"
+            message:
+                body: "Tin nhắn"
+        errors:
+            models:
+                user:
+                    attributes:
+                        username:
+                            blank: "Tên đăng nhập không được để trống"
+                            too_short: "Tên đăng nhập quá ngắn (tối thiểu 3 ký tự)"
+                            too_long: "Tên đăng nhập quá dài (tối đa 25 ký tự)"
+                            taken: "Tên đăng nhập đã được sử dụng"
+                        password:
+                            blank: "Mật khẩu không được để trống"
+                        password_confirmation:
+                            confirmation: "Xác nhận mật khẩu không khớp với mật khẩu"
